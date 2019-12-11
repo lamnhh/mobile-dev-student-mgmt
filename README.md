@@ -11,6 +11,7 @@ Team members:
 - Create a file named .env containing `CONNECTION_STRING=<CONNECTION_STRING>`.
 - Install required packages: `npm install`.
 - Start server: `npm start`.
+- The server runs on port 3000.
 
 ## API Documentation
 

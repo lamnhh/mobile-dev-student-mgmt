@@ -14,9 +14,6 @@ const StudentSchema = new mongoose.Schema({
 const Student = new mongoose.model("students", StudentSchema);
 
 const getStudentList = async (count) => {
-  if (typeof count !== "number") {
-    throw Error("Expected count to be an integer, got " + String(count) + " instead.");
-  }
   if (count == -1) {
     return await Student.find().sort({ mssv: 1 });
   }

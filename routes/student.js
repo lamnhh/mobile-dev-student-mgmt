@@ -9,7 +9,9 @@ const Student = require("../controllers/student");
 router.get("/", (req, res) => {
   const count = Number(req.query.count);
   if (isNaN(count)) {
-    res.status(400).send("Expected a number, got " + req.query.count);
+    res.status(400).send({
+      message: `Expected a number, got ${req.query.count} instead.`
+    });
     return;
   }
   Student.getStudentList(count)
@@ -17,7 +19,7 @@ router.get("/", (req, res) => {
       res.send(studentList);
     })
     .catch((err) => {
-      res.status(400).send(err);
+      res.status(500).send(err);
     });
 });
 
