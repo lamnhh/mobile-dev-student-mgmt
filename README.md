@@ -8,6 +8,7 @@ Team members:
 
 ## Setup
 
+- Setup your own MongoDB server.
 - Create a file named .env containing `CONNECTION_STRING=<CONNECTION_STRING>`.
 - Install required packages: `npm install`.
 - Start server: `npm start`.
