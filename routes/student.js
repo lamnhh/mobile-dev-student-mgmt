@@ -53,26 +53,38 @@ router.delete("/:mssv", (req, res) => {
       res.send("");
     })
     .catch((err) => {
-      res.status(400).send(err);
+      res.status(500).send(err);
     });
 });
 
 /**
  * PUT /student/#{MSSV}
  * {
- *    "hoten": "Nguyen Hy Hoai Lam 2"
+ *    "mssv": "1712932_2"
+ *    "hoten": "Nguyen Hy Hoai Lam_2"
  * }
  * Edit hoten of a student, given their mssv
  */
-router.put("/:mssv", (req, res) => {
+router.put("/:mssv", (req, res, next) => {
   const mssv = req.params.mssv;
-  const hoten = req.body.hoten;
-  Student.updateStudent(mssv, hoten)
-    .then(() => {
-      res.send("");
+  const student = {
+    ...(req.body.mssv && { mssv: req.body.mssv }),
+    ...(req.body.hoten && { hoten: req.body.hoten })
+  };
+
+  Student.updateStudent(mssv, student)
+    .then((doc) => {
+      // Returns updated document
+      res.send(doc);
     })
     .catch((err) => {
-      res.status(400).send(err);
+      if (err.name) {
+        if (err.name === "INVALID_MSSV" || err.name == "INVALID_NEW_MSSV") {
+          res.status(400).send({ message: err.message });
+          return;
+        }
+      }
+      res.status(500).send({ message: err.message });
     });
 });
 
