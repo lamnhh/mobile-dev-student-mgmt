@@ -40,8 +40,9 @@ Delete a student from database, given their mssv
 
 ```
 {
-  "hoten": "Nguyen Hy Hoai Lam 2"
+  "mssv": "1712932_2
+  "hoten": "Nguyen Hy Hoai Lam_2"
 }
 ```
 
-Edit hoten of a student, given their mssv
+Edit information of a student, given their mssv
