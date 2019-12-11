@@ -36,7 +36,12 @@ const getStudentList = async (count) => {
  * @param {String} hoten
  * @returns {Object} Inserted student {_id, mssv, hoten}
  */
-const insertStudent = (mssv, hoten) => {
+const insertStudent = async (mssv, hoten) => {
+  if (await Student.findOne({ mssv })) {
+    const err = Error(`MSSV ${mssv} already exists`);
+    err.name = "INVALID_NEW_MSSV";
+    throw err;
+  }
   return Student.create({ mssv, hoten });
 };
 
@@ -74,7 +79,14 @@ const updateStudent = async (mssv, newStudent) => {
  * @param {String} mssv
  * @returns {Boolean} True if said student is successfully deleted, False otherwise.
  */
-const deleteStudent = (mssv) => {
+const deleteStudent = async (mssv) => {
+  // Validate if `mssv` is in database or not.
+  if ((await Student.countDocuments({ mssv })) == 0) {
+    const err = Error(`MSSV ${mssv} does not exist`);
+    err.name = "INVALID_MSSV";
+    throw err;
+  }
+
   return Student.deleteOne({ mssv });
 };
 
