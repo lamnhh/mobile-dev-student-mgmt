@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const db = require("../controllers/db");
+const Student = require("../controllers/student");
 
 /**
  * GET /student?count=#{STUDENT_COUNT}
@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
     res.status(400).send("Expected a number, got " + req.query.count);
     return;
   }
-  db.getStudentList(count)
+  Student.getStudentList(count)
     .then((studentList) => {
       res.send(studentList);
     })
@@ -31,7 +31,7 @@ router.get("/", (req, res) => {
  */
 router.post("/", (req, res) => {
   const { mssv, hoten } = req.body;
-  db.insertStudent(mssv, hoten)
+  Student.insertStudent(mssv, hoten)
     .then((doc) => {
       res.send(doc);
     })
@@ -46,7 +46,7 @@ router.post("/", (req, res) => {
  */
 router.delete("/:mssv", (req, res) => {
   const mssv = req.params.mssv;
-  db.deleteStudent(mssv)
+  Student.deleteStudent(mssv)
     .then(() => {
       res.send("");
     })
@@ -65,7 +65,7 @@ router.delete("/:mssv", (req, res) => {
 router.put("/:mssv", (req, res) => {
   const mssv = req.params.mssv;
   const hoten = req.body.hoten;
-  db.updateStudent(mssv, hoten)
+  Student.updateStudent(mssv, hoten)
     .then(() => {
       res.send("");
     })

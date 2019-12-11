@@ -1,9 +1,4 @@
-const dotenv = require("dotenv");
-const mongoose = require("mongoose");
-dotenv.config();
-
-const connectionString = process.env.CONNECTION_STRING;
-mongoose.connect(connectionString, { useNewUrlParser: true });
+const mongoose = require("../config/db");
 
 const StudentSchema = new mongoose.Schema({
   mssv: {
@@ -16,7 +11,6 @@ const StudentSchema = new mongoose.Schema({
     required: true
   }
 });
-
 const Student = new mongoose.model("students", StudentSchema);
 
 const getStudentList = async (count) => {
